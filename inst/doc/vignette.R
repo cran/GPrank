@@ -31,7 +31,7 @@ model=constructModel(t,y,v,kernelTypes)
 ###################################################
 ### code chunk number 5: vignette.Rnw:95-101
 ###################################################
-test_result=gpTest(t,y,v,
+test_result=apply_gpTest(t,y,v,
 nullModelKernelTypes=c("white","fixedvariance"),
 modelKernelTypes=c("rbf","white","fixedvariance"))
 null_model=test_result$nullModel
@@ -58,28 +58,27 @@ title(xlab="t", ylab="y")
 
 
 ###################################################
-### code chunk number 8: vignette.Rnw:141-150
+### code chunk number 8: vignette.Rnw:142-150
 ###################################################
-BF=c(3,10,2) # Bayes factors
-FoldChange=c(0.5,3,5) # Fold changes
+BF=c(3,5) # Bayes factors
+FoldChange=c(1.2,0.8) # Fold changes
 dbParams=list("BF"=BF,"Fold change"=FoldChange)
-identifiers=c("geneA","geneB","geneC")
+identifiers=c("geneA","geneB")
 dbInfo=list(database_name="testdb","database_params"=dbParams,
 "identifiers"=identifiers)
-figuresPath="figures/" # directory where the figures are saved
-multi=1 # multiple figures will be displayed for each item
-createDatabase(dbInfo,figuresPath,multi)
+figures=c("figures/geneA_GP.png","figures/geneB_GP.png")
+createDatabase(dbInfo,figures)
 
 
 ###################################################
-### code chunk number 9: vignette.Rnw:158-160
+### code chunk number 9: vignette.Rnw:162-164
 ###################################################
 library("GPrank")
 data(RNAseqDATA)
 
 
 ###################################################
-### code chunk number 10: vignette.Rnw:206-213
+### code chunk number 10: vignette.Rnw:210-217
 ###################################################
 t=log(c(0,5,10,20,40,80,160,320,640,1280)+5) # One can apply
 #transforation on time points
@@ -91,21 +90,21 @@ bitseq_sampleData=bitseq_rnaSeqData(t,trFileName)
 
 
 ###################################################
-### code chunk number 11: vignette.Rnw:218-220
+### code chunk number 11: vignette.Rnw:222-224
 ###################################################
 gene_gpData=RNAseqDATA$gene
 gene_GP_models=bitseq_fitGPs(gene_gpData)
 
 
 ###################################################
-### code chunk number 12: vignette.Rnw:224-226 (eval = FALSE)
+### code chunk number 12: vignette.Rnw:228-230 (eval = FALSE)
 ###################################################
 ## gene_GP_models=bitseq_fitGPs(gene_gpData, fileName_logBF,
 ## fileName_ModelParams,fileName_NullModelParams)
 
 
 ###################################################
-### code chunk number 13: vignette.Rnw:232-240 (eval = FALSE)
+### code chunk number 13: vignette.Rnw:236-244 (eval = FALSE)
 ###################################################
 ## item="ARAP2"
 ## multi=0 # single GP plot in the figure
@@ -118,7 +117,7 @@ gene_GP_models=bitseq_fitGPs(gene_gpData)
 
 
 ###################################################
-### code chunk number 14: vignette.Rnw:244-252
+### code chunk number 14: vignette.Rnw:248-256
 ###################################################
 item="ARAP2"
 multi=0 # single GP plot in the figure
@@ -131,14 +130,14 @@ x_ticks, x_label, y_label)
 
 
 ###################################################
-### code chunk number 15: vignette.Rnw:260-262 (eval = FALSE)
+### code chunk number 15: vignette.Rnw:264-266 (eval = FALSE)
 ###################################################
 ## bitseq_plotGP(item, gene_GP_models, gene_gpData, multi, ylimits,
 ## x_ticks, x_label, y_label, plotName="ARAP2_gene.png")
 
 
 ###################################################
-### code chunk number 16: vignette.Rnw:266-276 (eval = FALSE)
+### code chunk number 16: vignette.Rnw:270-280 (eval = FALSE)
 ###################################################
 ## abstr_gpData=RNAseqDATA$abstr
 ## abstr_GP_models=bitseq_fitGPs(abstr_gpData)
@@ -153,7 +152,7 @@ x_ticks, x_label, y_label)
 
 
 ###################################################
-### code chunk number 17: vignette.Rnw:280-290
+### code chunk number 17: vignette.Rnw:284-294
 ###################################################
 abstr_gpData=RNAseqDATA$abstr
 abstr_GP_models=bitseq_fitGPs(abstr_gpData)
@@ -168,7 +167,7 @@ x_ticks, x_label, y_label)
 
 
 ###################################################
-### code chunk number 18: vignette.Rnw:298-309 (eval = FALSE)
+### code chunk number 18: vignette.Rnw:302-313 (eval = FALSE)
 ###################################################
 ## reltr_gpData=RNAseqDATA$reltr
 ## reltr_GP_models=bitseq_fitGPs(reltr_gpData)
@@ -184,7 +183,7 @@ x_ticks, x_label, y_label)
 
 
 ###################################################
-### code chunk number 19: vignette.Rnw:313-324
+### code chunk number 19: vignette.Rnw:317-328
 ###################################################
 reltr_gpData=RNAseqDATA$reltr
 reltr_GP_models=bitseq_fitGPs(reltr_gpData)
@@ -200,20 +199,20 @@ x_ticks, x_label, y_label)
 
 
 ###################################################
-### code chunk number 20: vignette.Rnw:343-344
+### code chunk number 20: vignette.Rnw:415-416
 ###################################################
 data(snpData)
 
 
 ###################################################
-### code chunk number 21: vignette.Rnw:348-350
+### code chunk number 21: vignette.Rnw:420-422
 ###################################################
 dataFileName="sampleCountsData"
 sampleSNPdata=bbgp_snpData(dataFileName)
 
 
 ###################################################
-### code chunk number 22: vignette.Rnw:355-363
+### code chunk number 22: vignette.Rnw:427-435
 ###################################################
 x=as.matrix(as.numeric(colnames(snpData$counts)))
 # take the fifth SNP in the sample data as example:
@@ -226,13 +225,13 @@ v=(bbgp$posteriorStd)^2
 
 
 ###################################################
-### code chunk number 23: vignette.Rnw:367-368
+### code chunk number 23: vignette.Rnw:439-440
 ###################################################
-snp_gpTest=gpTest(t,y,v)
+snp_gpTest=apply_gpTest(t,y,v)
 
 
 ###################################################
-### code chunk number 24: vignette.Rnw:373-377 (eval = FALSE)
+### code chunk number 24: vignette.Rnw:445-449 (eval = FALSE)
 ###################################################
 ## model=snp_gpTest$model
 ## ylims=c(0,1)
@@ -241,7 +240,7 @@ snp_gpTest=gpTest(t,y,v)
 
 
 ###################################################
-### code chunk number 25: vignette.Rnw:381-385
+### code chunk number 25: vignette.Rnw:453-457
 ###################################################
 model=snp_gpTest$model
 ylims=c(0,1)
@@ -250,7 +249,7 @@ title(xlab="Time", ylab="Frequency")
 
 
 ###################################################
-### code chunk number 26: vignette.Rnw:393-394
+### code chunk number 26: vignette.Rnw:465-466
 ###################################################
 sessionInfo()
 

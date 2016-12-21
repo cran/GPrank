@@ -1,2 +1,0 @@
-# GPrank
-GPrank - R package

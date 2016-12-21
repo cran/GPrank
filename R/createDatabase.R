@@ -5,11 +5,6 @@
 #' GP profiles of the selected items on a browser,
 #' enabling to rank them according to their Bayes factors 
 #' and other provided parameters.
-#' Please place all figures in a subdirectory and also remember
-#' to place tigreBrowser configuration files in the same folder
-#' with the database as well.
-#' Also modify the database name accordingly
-#' in "tigreBrowser.cfg".
 #' For details of using tigreBrowser, please refer to
 #' \url{https://github.com/PROBIC/tigreBrowser} and. 
 #' \url{https://github.com/PROBIC/tigreBrowserWriter}.
@@ -21,17 +16,12 @@
 #' \item \code{database_name}: Name of the database.
 #' \item \code{database_params}: List of parameters which will be included in the database.
 #' \item \code{identifiers}: Identifiers for the items which will be displayed on the browser.
-#' These identifiers should appear in the begining of the corresponding figure names.
-#' If multiple figures will be displayed for each item, they should be separated with
-#' specific names added after identifier name followed by underscore. 
+#' These identifiers should appear in the begining of the corresponding figure names, followed by 
+#' an underscore and the type of the plot.
 #' For example, for identifier "geneA", multiple figures may be named as 
 #' "geneA_gene.png", "geneA_abstr.png", and "geneA_reltr.png".
-#' If there is only a single figure to display, please name it with the corresponding identifier
-#' name. For example, for identifier "geneA", name the figure "geneA.png".
 #' }
-#' @param figuresPath Directory in which the figures are placed in png format.
-#' @param multi Logical value indicating whether items have multiple (1) or single (0) figure(s).
-#' Default value is set to 0.
+#' @param figs Character vector containing the figure names. 
 #'
 #' @export
 #' @return Generates an SQLite database named "$database_name.sqlite".
@@ -42,9 +32,15 @@
 #' dbParams=list("BF"=BF,"Fold change"=FoldChange)
 #' identifiers=c("geneA","geneB","geneC")
 #' dbInfo=list(database_name="testdb","database_params"=dbParams,"identifiers"=identifiers)
-#' figuresPath="figures/"
-#' multi=1
-#' createDatabase(dbInfo,figuresPath,multi)
+#' figs=c("geneA_gene.png","geneA_abstr.png","geneA_reltr.png","geneB_gene.png",
+#' "geneB_abstr.png","geneB_reltr.png","geneC_gene.png","geneC_abstr.png","geneC_reltr.png")
+#' for (i in seq(1,9)) {
+#' 	examplefig=figs[i] 
+#'      png(examplefig)
+#'      plot(c(0, 1), c(0, 1))
+#'      dev.off()
+#' }
+#' createDatabase(dbInfo,figs)
 #'
 #' @import tigreBrowserWriter
 #' 
@@ -53,7 +49,7 @@
 #' 
 
 createDatabase <-
-function(dbInfo,figuresPath,multi=0) {
+function(dbInfo,figs) {
 
 	project_name=dbInfo$database_name
 	db_name=paste(project_name,".sqlite",sep="")
@@ -77,19 +73,21 @@ function(dbInfo,figuresPath,multi=0) {
 	}
 
 	# Insert figures:
-	if (multi==0) {
-		fig_link=paste(figuresPath,"${probe_name}.png",sep="")
-		db = insertFigures(db, param_id, "_", fig_link)
+	if (length(figs)<1) {
+		stop(sprintf("No figures are specified..."))		
 	} else {
-		figs <- list.files(path=figuresPath, pattern = "\\.png$")
 		fig_extensions=unique(sapply(strsplit(figs,split="\\_"), tail, n = 1))
 		n_fig=length(fig_extensions)
 		for (f in 1:n_fig) {
-			fig_link=paste(figuresPath,"${probe_name}_",fig_extensions[f],sep="")
-			db = insertFigures(db, param_id, "_", fig_link)	
+			fig_f=figs[grep(figs,pattern=fig_extensions[f])]
+			fig_identifiers=sapply(strsplit(fig_f,split="\\_"), head, n = 1)
+			fig_identifiers=sapply(strsplit(fig_identifiers,split="/"), tail, n = 1)
+			names(fig_f)=fig_identifiers
+			fig_f=as.list(fig_f)
+			db = insertFigureData(db, param_id, "_", fig_f,name=sapply(strsplit(fig_extensions[[f]],split="\\."), head, n = 1))	
 		}
 	}
 
 	db = closeDb(db)
-
+	Sys.chmod(db_name, mode = "444")
 }
