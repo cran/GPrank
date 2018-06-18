@@ -134,7 +134,7 @@ the help of \Rpackage{tigreBrowser} package~\citep{Honkela2011}.
 on a browser and to filter them according to provided parameters such
 as Bayes factors. \Rpackage{tigreBrowser} is available on
 \url{https://github.com/PROBIC/tigreBrowser} and can be installed with the 
-command: \textit{python setup.py install --user}.
+command: \textit{python setup.py install}.
 
 Following is a simplified example to create a database containing the provided
 parameters (Bayes factors and fold changes)
@@ -445,7 +445,7 @@ Once we have fitted the GP model, we can visualize it using \Rfunction{plotGP} f
 <<eval=FALSE, echo=TRUE>>=
 model=snp_gpTest$model
 ylims=c(0,1)
-plotGP(model, ylimits=ylims)
+plotGP(model, ylimits=ylims, jitterx=TRUE)
 title(xlab="Time", ylab="SNP frequency")
 @
 \begin{figure}[h]
@@ -453,7 +453,7 @@ title(xlab="Time", ylab="SNP frequency")
 <<eval=TRUE, fig=TRUE, echo=FALSE>>=
 model=snp_gpTest$model
 ylims=c(0,1)
-plotGP(model, ylimits=ylims)
+plotGP(model, ylimits=ylims, jitterx=TRUE)
 title(xlab="Time", ylab="Frequency")
 @
 \end{center}

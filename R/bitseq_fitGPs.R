@@ -20,9 +20,11 @@
 #' @return List of results
 #'
 #' @examples
+#' \dontrun{
 #' RNAseqDATA
 #' gpData=RNAseqDATA$reltr
 #' GPfits=bitseq_fitGPs(gpData)
+#' }
 #' 
 #' @keywords GP
 #' @seealso \code{\link{bitseq_rnaSeqData}}

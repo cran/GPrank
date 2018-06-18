@@ -50,6 +50,7 @@ in legends for at most three items which have the largest
 log Bayes factors.
 }
 \examples{
+\dontrun{
 RNAseqDATA
 gpData=RNAseqDATA$reltr
 GPfits=bitseq_fitGPs(gpData)
@@ -61,15 +62,15 @@ x_label="Time (minutes)"
 y_label="Expression level (rpkm)"
 plotName="ARAP2_reltr.pdf"
 bitseq_plotGP(item, GPfits, gpData, multi, ylimits, x_ticks, x_label, y_label, plotName)
-
 }
-\author{
-Hande Topa, \email{hande.topa@helsinki.fi}
+
 }
 \seealso{
 \code{\link{getColorVector}} \code{\link{bitseq_setPlot}} \code{\link{bitseq_fitGPs}} \code{\link{bitseq_rnaSeqData}}
 }
+\author{
+Hande Topa, \email{hande.topa@helsinki.fi}
+}
 \keyword{GP}
 \keyword{multi}
 \keyword{plot}
-

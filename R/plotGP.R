@@ -8,6 +8,7 @@
 #' @param ylimits Numeric vector which contains minimum and maximum limits for the y axis.
 #' @param write_xticks Boolean: whether to write x ticks and labels or not
 #' @param write_yticks Boolean: whether to write y ticks and labels or not
+#' @param jitterx Boolean: whether to jitter duplicated x values or not
 #'
 #' @export
 #' @return Creates the plot of the fitted GP model.
@@ -30,13 +31,13 @@
 #' 
 
 plotGP <-
-function(model,col_item='gray',ylimits=NULL, write_xticks=TRUE, write_yticks=TRUE) {
+function(model,col_item='gray',ylimits=NULL, write_xticks=TRUE, write_yticks=TRUE, jitterx=FALSE) {
 	
 	x=model$X
 	y=model$y
 	K = model$K_uu
 	invK = model$invK_uu
-	xtest = matrix(seq(head(x,1)-1e-14, tail(x,1)+1e-14, length = 100), ncol = 1)
+	xtest = matrix(seq(c(head(x,1))-1e-14, c(tail(x,1))+1e-14, length = 100), ncol = 1)
 	xtest=rbind(xtest,x)
 	xtest=sort(xtest)
 	Kx = kernCompute(model$kern, x, xtest)
@@ -58,7 +59,7 @@ function(model,col_item='gray',ylimits=NULL, write_xticks=TRUE, write_yticks=TRU
 	}
 
 	if (is.null(ylimits)) {
-		ylimits=getYlimits(y,v)	
+		ylimits=getYlimits(y,v,ypredMean,ypredVar)
 	}
 
         if (write_xticks) {
@@ -81,17 +82,13 @@ function(model,col_item='gray',ylimits=NULL, write_xticks=TRUE, write_yticks=TRU
 	lines(xtest,ypredMean,lty=1,col='black')	
 
 	x_jittered=x
-	x_jittered[which(duplicated(x)==TRUE)]=jitter(x[which(duplicated(x)==TRUE)])
+	if (jitterx==TRUE) {
+	  x_jittered[which(duplicated(x)==TRUE)]=jitter(x[which(duplicated(x)==TRUE)])
+	}
 	points(x_jittered,y,col='black',pch=20)
 
-	no_of_kernels=length(model$kern$comp)
-	kernTypes=list()
-	for (i in 1:no_of_kernels) {
-		kernTypes=append(kernTypes,model$kern$comp[[i]]$type)
-	}
-
 	if (any(v>0)) {
-		arrows(as.vector(x_jittered), as.vector(y-2*sqrt(v)), as.vector(x_jittered), as.vector(y+2*sqrt(v)), length=0.05, angle=90, code=3, lwd=2, 			col=getDarkerColor(col_item))
+		arrows(as.vector(x_jittered), as.vector(y-2*sqrt(v)), as.vector(x_jittered), as.vector(y+2*sqrt(v)), length=0.05, angle=90, code=3, lwd=2, col=getDarkerColor(col_item))
 	} 
 
 }
@@ -116,3 +113,5 @@ function(color, factor=0.6) {
 	return(dark_color)
 
 }
+
+
