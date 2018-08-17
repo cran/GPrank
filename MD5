@@ -1,4 +1,4 @@
-13fc550c49765766dc777388cb3a6571 *DESCRIPTION
+a46982a8f87788a8370b5f0ffb8c74cd *DESCRIPTION
 de1bd990f89f83d18fff83b84ab39dc5 *LICENSE
 cce745791c0634537b4898499da808d5 *NAMESPACE
 b67b7c101ea66e4f7cc6129ced2e0fe1 *R/GPrank-package.R
@@ -24,13 +24,13 @@ b39875cd648cf4ba7ddd1c7e019aaf8f *R/get_bbgpMeanStd.R
 46cacfac67ddcc2e44346da97796ce75 *R/plotGP.R
 1887aa4979b4ff072e70d91bb8c6786f *R/setInitParams.R
 a345edbfd79a31de790480fe675e8893 *R/snpData-data.R
-fe99d3431c48c2042bcc9333dd631e2d *build/vignette.rds
+d44ad42c9ce1b18af134308520bb4f62 *build/vignette.rds
 8ba7ea9db86e1c47347d8fa5dfca3ad8 *data/RNAseqDATA.RData
 d4b54546f90581c55c4f1533f188d903 *data/snpData.RData
 1b31a719d37af800ce5c57d57f2fe948 *inst/CITATION
-7d50d1d59c02bf22fd942dfd54d4fe02 *inst/doc/vignette.R
-f885e1a57e512af73ae5551f14248d71 *inst/doc/vignette.Rnw
-2cb216ae87d886c19e5f5be8b30d6f3c *inst/doc/vignette.pdf
+a06d831c5a9b4d27d8ca1f915ba1ee86 *inst/doc/GPrank.R
+558a531cd9659ec718c8d0a55e3a2d18 *inst/doc/GPrank.Rmd
+de5551e334c4e44e6da2d04d1c41cb35 *inst/doc/GPrank.html
 7a736b0bb2cdf5bb26d45eb027cfb958 *man/GPrank-package.Rd
 db27ab332d82c4449b36bbf56496a21c *man/RNAseqDATA.Rd
 7696a0f470c22d98eedaac4c460c4403 *man/apply_gpTest.Rd
@@ -54,12 +54,8 @@ c8df33dc6014c06ce799acd55b1bb258 *man/get_bbgpMeanStd.Rd
 26439e6843ef894760b980b66f7474d0 *man/plotGP.Rd
 59ade825af570df908d4933219d577fd *man/setInitParams.Rd
 d6daef7a4fb9ebbc2f34ecd159c7b55f *man/snpData.Rd
-1287a86a63c6f15b41de2a75d76583a9 *vignettes/GPrank_refs.bib
+558a531cd9659ec718c8d0a55e3a2d18 *vignettes/GPrank.Rmd
 5af2310e1183326990a9175d89075709 *vignettes/example_tr
-42a172354866f5420af502c479f6d88c *vignettes/figures/geneA_GP.png
-e989a1925c814080463d06e71704d5dd *vignettes/figures/geneB_GP.png
-2f45aa0aac55755f4a802578c5cd3d8c *vignettes/natbib.bst
-e8af73603d5c055d67faa3405f72c6f0 *vignettes/natbib.sty
 142a19b41837104069a3ad1c2d14cf7c *vignettes/sampleCountsData
 51985867f6bead1865bb21fa34ff32b2 *vignettes/t0000.rpkm
 8e82d3833d0708edc219c1bbb3c80ecc *vignettes/t0005.rpkm
@@ -71,4 +67,4 @@ e2471caba93ffadba3e1c39bf0ec78cc *vignettes/t0160.rpkm
 634a844538826d9f62a029c303a23a48 *vignettes/t0320.rpkm
 7eb01091935fdc0cf758060c045803d6 *vignettes/t0640.rpkm
 b0f3280d4d01a32b9a652d87f6cc650a *vignettes/t1280.rpkm
-f885e1a57e512af73ae5551f14248d71 *vignettes/vignette.Rnw
+d336b25baf1a691fd855bd30cee0d55d *vignettes/testdb.sqlite
